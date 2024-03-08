@@ -1,5 +1,6 @@
 # Notes
 Exercise 1: Numeric Input
+
 -only accepts numeric input
 -correct format for leading 0 or .
 -added class for error
