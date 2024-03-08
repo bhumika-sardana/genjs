@@ -1,3 +1,18 @@
+# Notes
+Exercise 1: Numeric Input
+-only accepts numeric input
+-correct format for leading 0 or .
+-added class for error
+-added class for valid input and focus away
+-changed color of border for required input class
+
+Exercise 2: Relative Date
+-completed function that returns text as per date
+-added sample values for unit test in relative-date.test.js
+
+Exercise 3:Shopping cart
+-successfuly displayed product that match the cart with the product catalog
+
 # JS Evaluation
 
 This repo includes a set of tests that can be used to assess the skills of

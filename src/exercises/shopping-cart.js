@@ -15,10 +15,36 @@
 *
 * */
 const View = {
-  init: () => {
-    const tbodyElem = document.getElementById('shopping-cart-tbl').querySelector('tbody');
+  init: async() => {
+    try {
 
-    console.log('TODO: Please see the above requirement');
+      //fetch cart from API
+      const responseCart = await fetch('http://localhost:4002/cart');
+      const dataCart = await responseCart.json();
+      
+      //fetch product data from API
+      const responseProduct = await fetch('http://localhost:4002/products');
+      const dataProducts = await responseProduct.json();
+
+      //find product and populate table
+      const tbodyElem = document.getElementById('shopping-cart-tbl').querySelector('tbody');
+      tbodyElem.innerHTML='';
+
+      dataCart.forEach(cartItem => {
+        //for each product that matches cart
+        const product = dataProducts.find(product => product.id === cartItem.id);
+        if(product){
+          //create table row
+          const row=document.createElement('tr');
+          row.innerHTML= `<td>${product.id}</td><td>${product.name}</td>`
+          tbodyElem.appendChild(row);
+        }
+      
+      });
+    }
+    catch (error) {
+      console.error('Error fetching data:', error);
+    }
   }
 };
 document.addEventListener('DOMContentLoaded', View.init);

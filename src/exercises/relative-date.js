@@ -14,7 +14,48 @@
 * */
 
 const calculateRelativeDate = (inputDate) => {
-  return `TODO: Please see the above requirement`;
+  const today= new Date();
+  const date= new Date(inputDate);
+
+  const millisecondsPerday= 24*60*60*1000;
+  const differenceInDays= Math.floor((today-date)/millisecondsPerday);
+
+  //  Today
+  if(differenceInDays === 0 ){
+    return 'Today';
+  }
+  //Yesterday
+  else if (differenceInDays == 1){
+    return 'Yesterday';
+  }
+  //This Week
+  else if(differenceInDays>=2 && differenceInDays <=7){
+    return 'This week';
+  }
+  // Last week
+  else if (differenceInDays > 7 && differenceInDays <= 14) {
+    return 'Last week';
+  }
+  // This month
+  else if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth()) {
+    return 'This month';
+  }
+  // Last month
+  else if (date.getFullYear() === today.getFullYear() && date.getMonth() === today.getMonth() - 1) {
+    return 'Last month';
+  }
+  // This year
+  else if (date.getFullYear() === today.getFullYear()) {
+    return 'This year';
+  }
+  // Last year
+  else if (date.getFullYear() === today.getFullYear() - 1) {
+    return 'Last year';
+  }
+  // Long time ago
+  else {
+    return 'Long time ago';
+  }
 };
 
 const View = {

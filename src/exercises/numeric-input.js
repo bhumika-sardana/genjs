@@ -20,9 +20,61 @@
 
 const NumericInput = {
   init: () => {
-    document.querySelectorAll('.c-numeric-input').forEach(elem => {
-      console.log('TODO: Please see the above requirement for numeric input');
+    document.querySelectorAll('.c-numeric-input').forEach(input => {
+      input.addEventListener('input',NumericInput.getInput);
+      input.addEventListener('focus',NumericInput.getFocus);
+      input.addEventListener('blur',NumericInput.getBlur);
     });
+  },
+
+  getInput: (event) => {
+    const input=event.target;
+    let value = input.value.trim();
+
+    //case 1: user enters leading zero
+    if (value.startsWith('0') && value.length > 1 && value[1] !== '.'){
+      value=value.replace(/^0+/, '');
+    }
+    //case 2: user enters .
+    if(value.startsWith('.')){
+      value= '0' + value;
+    }
+    
+    //update input value
+    input.value=value;
+  },
+
+  getFocus: (event) =>{
+    const input=event.target;
+    input.classList.remove('c-numeric-input--error','c-numeric-input--valid');
+  },
+
+  getBlur: (event) =>{
+    const input=event.target;
+    let value=input.value.trim();
+
+    if(value === '' || isNaN(parseFloat(value))) {
+      input.classList.add('c-numeric-input--error');
+
+      //check if invalid input error msg already exist
+      let invalidError=input.nextElementSibling;
+      if(!invalidError || !invalidError.classList.contains('c-numeric-input__error-msg')){
+        //create a new span for error message
+      invalidError=document.createElement('span');
+      invalidError.classList.add('c-numeric-input__error-msg');
+      invalidError.innerHTML = ' Invalid Input';
+
+      //insert after input element
+      input.insertAdjacentElement('afterend', invalidError);
+      }
+      
+    }
+    else {
+      input.classList.remove('c-numeric-input--error');
+      input.classList.add('c-numeric-input--valid');
+      input.nextElementSibling.innerHTML = '';
+    }
   }
 };
+
 document.addEventListener('DOMContentLoaded', NumericInput.init);
